@@ -18,4 +18,59 @@
 🎉 게임 종료: 당신의 승리입니다!
 
 Math.random() - 난수 생성 함수
-*/ 
+*/
+const gameRules = {
+  가위: {
+    win: "보",
+    lose: "바위",
+  },
+  바위: {
+    win: "가위",
+    lose: "보",
+  },
+  보: {
+    win: "바위",
+    lose: "가위",
+  },
+};
+
+let gameCount = 0;
+
+let userWinCount = 0;
+let computerWinCount = 0;
+
+const choices = ["가위", "바위", "보"];
+function getComputerChoice() {
+  return choices[Math.floor(Math.random() * 3)];
+}
+
+do {
+  const computer = getComputerChoice();
+  const userChoices = prompt("가위, 바위, 보 중 하나를 선택하세요: ");
+  if (!choices.includes(userChoices)) {
+    alert("잘못된 입력입니다. 가위, 바위, 보 중 하나를 선택해주세요.");
+    continue;
+  }
+  alert(`user: ${userChoices}`);
+
+  alert(`computer: ${computer}`);
+  gameCount++;
+  if (computer === userChoices) {
+    alert("비겼습니다.");
+  } else if (gameRules[userChoices].win === computer) {
+    alert("이겼습니다.");
+    userWinCount++;
+  } else {
+    alert("졌습니다.");
+    computerWinCount++;
+  }
+  alert(`win: ${userWinCount} / lose: ${computerWinCount}`);
+  if (userWinCount >= 2 || computerWinCount >= 2) {
+    alert(
+      userWinCount > computerWinCount
+        ? "🎉 게임 종료: 사용자의 승리입니다!"
+        : "🎉 게임 종료: 컴퓨터터의 승리입니다!"
+    );
+    break;
+  }
+} while (true);
